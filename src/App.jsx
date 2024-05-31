@@ -19,18 +19,20 @@ function App() {
   const [price, setPrice] = useState(0);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/cards").then((res) => {
-      setTimeout(() => {
-        setDataArr(res.data);
-        setIsLoading(false);
-      }, 500);
-      setPrice(
-        res.data
-          .filter((item) => item.isAdded)
-          .reduce((sum, obj) => obj.price + sum, 0)
-      );
-      setIsAddedArr(res.data.filter((item) => item.isAdded));
-    });
+    axios
+      .get("https://6655455a3c1d3b602938c16d.mockapi.io/dataSneakers")
+      .then((res) => {
+        setTimeout(() => {
+          setDataArr(res.data);
+          setIsLoading(false);
+        }, 500);
+        setPrice(
+          res.data
+            .filter((item) => item.isAdded)
+            .reduce((sum, obj) => obj.price + sum, 0)
+        );
+        setIsAddedArr(res.data.filter((item) => item.isAdded));
+      });
   }, [isChange]);
 
   const values = {

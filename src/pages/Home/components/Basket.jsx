@@ -59,10 +59,13 @@ export const Basket = () => {
                   </div>
                   <Cross
                     onClick={() => {
-                      axios.put(`http://localhost:3000/cards/${item.id}`, {
-                        ...item,
-                        ["isAdded"]: false,
-                      });
+                      axios.put(
+                        `https://6655455a3c1d3b602938c16d.mockapi.io/dataSneakers/${item.id}`,
+                        {
+                          ...item,
+                          ["isAdded"]: false,
+                        }
+                      );
                       setChange((isChange) => isChange + 1);
                     }}
                   />
@@ -84,15 +87,22 @@ export const Basket = () => {
                 onClick={() => {
                   setIsBuyed(!isBuyed);
                   sendData(isAddedArr, buyedLenght);
-                  axios.get("http://localhost:3000/cards").then((rq) => {
-                    rq.data.map((itemAll) => {
-                      axios.put(`http://localhost:3000/cards/${itemAll.id}`, {
-                        ...itemAll,
-                        ["isAdded"]: !"false",
+                  axios
+                    .get(
+                      "https://6655455a3c1d3b602938c16d.mockapi.io/dataSneakers"
+                    )
+                    .then((rq) => {
+                      rq.data.map((itemAll) => {
+                        axios.put(
+                          `https://6655455a3c1d3b602938c16d.mockapi.io/dataSneakers/${itemAll.id}`,
+                          {
+                            ...itemAll,
+                            ["isAdded"]: !"false",
+                          }
+                        );
+                        setChange((isChange) => isChange + 1);
                       });
-                      setChange((isChange) => isChange + 1);
                     });
-                  });
                   setChange((isChange) => isChange + 1);
                 }}
               >
