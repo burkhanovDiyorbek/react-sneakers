@@ -12,12 +12,12 @@ export const Basket = () => {
   const [buyedLenght, setLength] = useState(0);
 
   const sendData = (data, id) => {
-    axios.post("http://localhost:3000/buyed", { id, data });
+    axios.post("https://6655455a3c1d3b602938c16d.mockapi.io/dataBuyedSneakers", { id, data });
   };
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/buyed")
+      .get("https://6655455a3c1d3b602938c16d.mockapi.io/dataBuyedSneakers")
       .then((data) => setLength(data.data.length));
   }, [buyedLenght]);
 

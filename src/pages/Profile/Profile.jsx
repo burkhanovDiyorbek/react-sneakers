@@ -14,7 +14,9 @@ export const Profile = () => {
   const { showBasket, setChange, isChange } = useContext(Context);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/buyed").then((rq) => setDataArr(rq.data));
+    axios
+      .get("https://6655455a3c1d3b602938c16d.mockapi.io/dataBuyedSneakers")
+      .then((rq) => setDataArr(rq.data));
   }, []);
 
   return (

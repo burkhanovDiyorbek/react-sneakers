@@ -16,7 +16,7 @@ export const Purchases = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/cards")
+      .get("https://6655455a3c1d3b602938c16d.mockapi.io/dataSneakers")
       .then((data) => setData(data.data.filter((item) => item.isLiked)));
   }, []);
   return (

@@ -17,15 +17,10 @@ export const Card = ({ img, title, price, id, setChange, isChange }) => {
     isAdded: false,
     isLiked: false,
   });
-  const sendLiked = (obj) => {
-    axios.post("http://localhost:3000/liked", obj);
-  };
-  const removeLiked = (id) => {
-    axios.delete(`http://localhost:3000/liked/${id}`);
-  };
+
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/cards/${id}`)
+      .get(`https://6655455a3c1d3b602938c16d.mockapi.io/dataSneakers/${id}`)
       .then((req) => req.data)
       .then((data) => {
         setObj(data);
@@ -35,10 +30,13 @@ export const Card = ({ img, title, price, id, setChange, isChange }) => {
   }, [isChange]);
 
   const changeItem = (type, bool, id) => {
-    axios.put(`http://localhost:3000/cards/${id}`, {
-      ...obj,
-      [type]: !bool,
-    });
+    axios.put(
+      `https://6655455a3c1d3b602938c16d.mockapi.io/dataSneakers/${id}`,
+      {
+        ...obj,
+        [type]: !bool,
+      }
+    );
   };
   return (
     <div className="card">
@@ -50,8 +48,8 @@ export const Card = ({ img, title, price, id, setChange, isChange }) => {
         }}
         className="like-btn"
       >
-        {!like && <Like onClick={() => sendLiked({ img, title, price, id })} />}
-        {like && <Liked onClick={() => removeLiked(id)} />}
+        {!like && <Like />}
+        {like && <Liked />}
       </button>
       <img src={img} alt="sneakers img" className="img" />
       <h2 className="title">{title}</h2>
