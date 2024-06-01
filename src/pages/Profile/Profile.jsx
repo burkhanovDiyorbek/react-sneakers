@@ -47,9 +47,9 @@ export const Profile = () => {
             </>
           ) : (
             <div className="show-empty">
-              <img src="../../../assets/sticker-2.png" alt="img" />
-              <h2>Закладок нет :(</h2>
-              <p>Вы ничего не добавляли в закладки</p>
+              <img src="./assets/sticker.png" alt="img" />
+              <h2>У вас нет заказов</h2>
+              <p>Закладок нет :(</p>
               <button onClick={() => navigate("/")}>
                 <Arrow />
                 Вернуться назад

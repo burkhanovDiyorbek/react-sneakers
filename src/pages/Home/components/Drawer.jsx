@@ -1,6 +1,6 @@
 import Cross from "../../../../public/assets/icons/cross.svg";
 import Arrow from "../../../../public/assets/icons/arror.svg";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Context } from "../../../App";
 import axios from "axios";
 
@@ -17,6 +17,13 @@ export const Drawer = () => {
   const [isBuyed, setIsBuyed] = useState(false);
   const [buyedId, setBuyedId] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("https://665961e4de346625136c2c22.mockapi.io/cart")
+      .then((req) => setCartItems(req.data));
+  }, []);
+
   const clickToOrder = async () => {
     try {
       setIsLoading(true);
@@ -26,20 +33,19 @@ export const Drawer = () => {
           items: cartItems,
         }
       );
-
       setBuyedId(data.id);
-      setIsBuyed(!isBuyed);
+      setIsBuyed(true);
       setCartItems([]);
-
-      await cartItems.forEach((itemCart) => {
-        axios.delete(
-          `https://665961e4de346625136c2c22.mockapi.io/cart/${itemCart.id}`
+      for (let i = 0; i < cartItems.length; i++) {
+        const item = cartItems[i];
+        await axios.delete(
+          "https://665961e4de346625136c2c22.mockapi.io/cart/" + item.id
         );
-      });
+      }
     } catch (error) {
-      alert(error);
-      setIsLoading(false);
+      alert("Ошибка при создании заказа :(");
     }
+    setIsLoading(false);
   };
 
   return (
