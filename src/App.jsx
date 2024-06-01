@@ -4,7 +4,6 @@ import { Layout } from "./components/Layout";
 import { Home } from "./pages/Home/Home";
 import { Purchases } from "./pages/Purchases/Purchases";
 import { createContext, useEffect, useState } from "react";
-import { Basket } from "./pages/Home/components/Basket";
 import axios from "axios";
 import { Profile } from "./pages/Profile/Profile";
 
@@ -12,43 +11,68 @@ export const Context = createContext(null);
 
 function App() {
   const [showBasket, setShowBasket] = useState(false);
-  const [isChange, setChange] = useState(0);
-  const [dataArr, setDataArr] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [isAddedArr, setIsAddedArr] = useState([]);
+  const [cartItems, setCartItems] = useState([]);
+  const [likedItems, setLikedItems] = useState([]);
+  const [buyedItems, setBuyedItems] = useState([]);
   const [price, setPrice] = useState(0);
+  const [items, setItems] = useState([]);
 
   useEffect(() => {
+    axios.get("http://localhost:3000/cards").then((res) => {
+      setTimeout(() => {
+        setItems(res.data);
+        setIsLoading(false);
+      }, 500);
+    });
     axios
-      .get("https://6655455a3c1d3b602938c16d.mockapi.io/dataSneakers")
-      .then((res) => {
-        setTimeout(() => {
-          setDataArr(res.data);
-          setIsLoading(false);
-        }, 500);
-        setPrice(
-          res.data
-            .filter((item) => item.isAdded)
-            .reduce((sum, obj) => obj.price + sum, 0)
-        );
-        setIsAddedArr(res.data.filter((item) => item.isAdded));
-      });
-  }, [isChange]);
+      .get("http://localhost:3000/cart")
+      .then((res) => setCartItems(res.data));
+    axios
+      .get("http://localhost:3000/buyed")
+      .then((res) => setBuyedItems(res.data));
+    axios
+      .get("http://localhost:3000/liked")
+      .then((res) => setLikedItems(res.data));
+  }, []);
+
+  const onAddToCart = (obj) => {
+    if (cartItems.find((item) => item.id === obj.id)) {
+      axios.delete(`http://localhost:3000/cart/${obj.id}`);
+      setCartItems((prev) => prev.filter((item) => item.id !== obj.id));
+    } else {
+      axios.post("http://localhost:3000/cart", obj);
+      setCartItems((prev) => [...prev, obj]);
+    }
+  };
+
+  const onLiked = (obj) => {
+    if (likedItems.find((item) => item.id === obj.id)) {
+      axios.delete(`http://localhost:3000/liked/${obj.id}`);
+      setLikedItems((prev) => prev.filter((item) => item.id !== obj.id));
+    } else {
+      axios.post("http://localhost:3000/liked", obj);
+      setLikedItems((prev) => [...prev, obj]);
+    }
+  };
+
+  useEffect(() => {
+    setPrice(cartItems.reduce((sum, obj) => obj.price + sum, 0));
+  }, [cartItems]);
 
   const values = {
-    isChange,
-    setChange,
-    dataArr,
-    setDataArr,
     isLoading,
     setIsLoading,
-    price,
-    setPrice,
-    isAddedArr,
-    setIsAddedArr,
+    setCartItems,
     sumOfPrice: price,
     showBasket,
     setShowBasket,
+    onAddToCart,
+    onLiked,
+    items,
+    likedItems,
+    cartItems,
+    buyedItems,
   };
 
   return (
@@ -56,7 +80,6 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />}></Route>
-          <Route path="*/basket" element={<Basket />} />
           <Route path="/purchases" element={<Purchases />} />
           <Route path="/profile" element={<Profile />} />
         </Route>

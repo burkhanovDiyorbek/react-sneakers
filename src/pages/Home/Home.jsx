@@ -2,22 +2,13 @@ import { useContext, useState } from "react";
 import Search from "../../../public/assets/icons/search.svg";
 import { Card } from "./components/Card";
 import { CardSkleton } from "./components/CardSkleton";
-import { Basket } from "./components/Basket";
+import { Drawer } from "./components/Drawer";
 import { Context } from "../../App";
 
 export const Home = () => {
   const [searchValue, setSearchValue] = useState("");
 
-  const {
-    showBasket,
-    setShowBasket,
-    isChange,
-    setChange,
-    sumOfPrice,
-    isLoading,
-    dataArr,
-    isAddedArr,
-  } = useContext(Context);
+  const { showBasket, isLoading, items, onRemove } = useContext(Context);
 
   document.body.style = `overflow:${showBasket ? "hidden" : "auto"};`;
 
@@ -45,47 +36,33 @@ export const Home = () => {
               Array(12)
                 .fill(0)
                 .map((_, index) => <CardSkleton key={index} />)}
-            {dataArr
-              ?.filter((item) =>
-                searchValue
-                  ? item.title.toLowerCase().includes(searchValue.toLowerCase())
-                  : item
+            {items
+              .filter((item) =>
+                item.title.toLowerCase().includes(searchValue.toLowerCase())
               )
               .map((item) => {
-                const { title, price, id, isAdded, isLiked, imgUrl } = item;
+                const { id, title, price, imgUrl } = item;
                 return (
                   <Card
                     key={id}
+                    id={id}
                     img={imgUrl}
                     title={title}
                     price={price}
-                    isAdded={isAdded}
-                    isLiked={isLiked}
-                    id={id}
-                    setChange={setChange}
-                    isChange={isChange}
+                    onRemove={onRemove}
                   />
                 );
               })}
-            {dataArr?.filter((item) =>
+            {/* {items?.filter((item) =>
               searchValue
                 ? item.title.toLowerCase().includes(searchValue.toLowerCase())
                 : item
             ).length == 0 &&
-              searchValue && <p>Nothing to see... :(</p>}
+              searchValue && <p>Nothing to see... :(</p>} */}
           </div>
         </div>
       </section>
-      {showBasket && (
-        <Basket
-          data={isAddedArr}
-          setShowBasket={setShowBasket}
-          showBasket={showBasket}
-          setChange={setChange}
-          isChange={isChange}
-          sumOfPrice={sumOfPrice}
-        />
-      )}
+      {showBasket && <Drawer />}
     </>
   );
 };

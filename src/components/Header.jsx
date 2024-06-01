@@ -3,8 +3,12 @@ import Basket from "../../public/assets/icons/basket.svg";
 import LikeHeader from "../../public/assets/icons/like-header.svg";
 import User from "../../public/assets/icons/user.svg";
 import PropTypes from "prop-types";
+import { useContext } from "react";
+import { Context } from "../App";
 
-export const Header = ({ setShowBasket, showBasket, sumOfPrice }) => {
+export const Header = ({ setShowBasket, showBasket }) => {
+  const { sumOfPrice } = useContext(Context);
+
   return (
     <header className="header">
       <div className="container">
