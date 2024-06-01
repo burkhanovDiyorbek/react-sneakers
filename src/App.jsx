@@ -19,39 +19,45 @@ function App() {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3000/cards").then((res) => {
-      setTimeout(() => {
-        setItems(res.data);
-        setIsLoading(false);
-      }, 500);
-    });
     axios
-      .get("http://localhost:3000/cart")
+      .get("https://6655455a3c1d3b602938c16d.mockapi.io/items")
+      .then((res) => {
+        setTimeout(() => {
+          setItems(res.data);
+          setIsLoading(false);
+        }, 500);
+      });
+    axios
+      .get("https://665961e4de346625136c2c22.mockapi.io/cart")
       .then((res) => setCartItems(res.data));
     axios
-      .get("http://localhost:3000/buyed")
+      .get("https://665961e4de346625136c2c22.mockapi.io/buyed")
       .then((res) => setBuyedItems(res.data));
     axios
-      .get("http://localhost:3000/liked")
+      .get("https://6655455a3c1d3b602938c16d.mockapi.io/likes")
       .then((res) => setLikedItems(res.data));
   }, []);
 
   const onAddToCart = (obj) => {
     if (cartItems.find((item) => item.id === obj.id)) {
-      axios.delete(`http://localhost:3000/cart/${obj.id}`);
+      axios.delete(
+        `https://665961e4de346625136c2c22.mockapi.io/cart/${obj.id}`
+      );
       setCartItems((prev) => prev.filter((item) => item.id !== obj.id));
     } else {
-      axios.post("http://localhost:3000/cart", obj);
+      axios.post("https://665961e4de346625136c2c22.mockapi.io/cart", obj);
       setCartItems((prev) => [...prev, obj]);
     }
   };
 
   const onLiked = (obj) => {
     if (likedItems.find((item) => item.id === obj.id)) {
-      axios.delete(`http://localhost:3000/liked/${obj.id}`);
+      axios.delete(
+        `https://6655455a3c1d3b602938c16d.mockapi.io/likes/${obj.id}`
+      );
       setLikedItems((prev) => prev.filter((item) => item.id !== obj.id));
     } else {
-      axios.post("http://localhost:3000/liked", obj);
+      axios.post("https://6655455a3c1d3b602938c16d.mockapi.io/likes", obj);
       setLikedItems((prev) => [...prev, obj]);
     }
   };

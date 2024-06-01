@@ -10,7 +10,7 @@ export const Profile = () => {
   const navigate = useNavigate();
 
   const { showBasket, buyedItems } = useContext(Context);
-
+  console.log(buyedItems);
   return (
     <>
       <section className="purchases-container">
@@ -25,14 +25,17 @@ export const Profile = () => {
               </div>
               <div className="cards">
                 {buyedItems.map((item) => {
-                  return item.data.map((item) => {
-                    const { img, title, price, id } = item;
-                    return (
-                      <>
-                        <Card key={id} img={img} title={title} price={price} />
-                      </>
-                    );
-                  });
+                  const { img, title, price } = item.items;
+                  return (
+                    <>
+                      <Card
+                        key={item.id}
+                        img={img}
+                        title={title}
+                        price={price}
+                      />
+                    </>
+                  );
                 })}
               </div>
             </>

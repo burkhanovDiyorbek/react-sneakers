@@ -42,8 +42,11 @@ export const Purchases = () => {
           ) : (
             <div className="show-empty">
               <img src="../../../assets/sticker.png" alt="" />
-              <h2>Закладок нет :(</h2>
-              <p>Вы ничего не добавляли в закладки</p>
+              <h2>У вас нет заказов</h2>
+              <p>
+                Вы нищеброд? <br />
+                Оформите хотя бы один заказ.
+              </p>
               <button onClick={() => navigate("/")}>
                 <Arrow />
                 Вернуться назад

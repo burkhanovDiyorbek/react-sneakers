@@ -165,7 +165,7 @@ a {
   }
   .card:hover {
     box-shadow: 0px 14px 30px 0px rgba(0, 0, 0, 0.05);
-    transform: translate(0px,-10px);
+    transform: translate(0px, -10px);
   }
 }
 
@@ -180,6 +180,8 @@ a {
   display: flex;
   flex-direction: column;
   align-items: end;
+  overflow: hidden;
+  transition: 5s;
   button {
     cursor: pointer;
     background: inherit;
@@ -193,19 +195,30 @@ a {
     background: #fff;
     box-shadow: -10px 4px 24px 0px rgba(0, 0, 0, 0.1);
     padding: 30px;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 5s ease-in;
   }
   .basket-title {
     display: flex;
     justify-content: space-between;
     margin-bottom: 30px;
   }
+  .basket-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1px;
+    height: 90%;
+  }
   .basket {
     display: flex;
     flex-direction: column;
     overflow: auto;
-    max-height: 65%;
-    min-height: 65%;
     flex: 1;
+    max-height: 65vh;
     .basket-card {
       display: flex;
       border-radius: 20px;
@@ -278,6 +291,10 @@ a {
           margin-left: 19px;
         }
       }
+      &:disabled {
+        background: #bebebe;
+        cursor: default;
+      }
     }
   }
   .empty-basket,
@@ -310,10 +327,19 @@ a {
         margin-right: 15px;
         transform: rotate(-180deg);
       }
+      &:hover {
+        background: #76d402;
+      }
     }
   }
 }
-
+.basket-container.visible {
+  transition: 5s ease;
+  .container-b {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
 .purchases-container {
   .container {
     flex-direction: column;
@@ -357,6 +383,14 @@ a {
         margin-right: 15px;
         transform: rotate(-180deg);
       }
+       &:hover {
+        background: #76d402;
+      }
     }
   }
+}
+
+button {
+  user-select: none;
+  transition: .3s ease;
 }
