@@ -181,7 +181,6 @@ a {
   flex-direction: column;
   align-items: end;
   overflow: hidden;
-  transition: 5s;
   button {
     cursor: pointer;
     background: inherit;
@@ -199,7 +198,6 @@ a {
     flex-direction: column;
     transform: translateX(100%);
     opacity: 0;
-    transition: transform 5s ease-in;
   }
   .basket-title {
     display: flex;
@@ -334,7 +332,6 @@ a {
   }
 }
 .basket-container.visible {
-  transition: 5s ease;
   .container-b {
     transform: translateX(0);
     opacity: 1;
