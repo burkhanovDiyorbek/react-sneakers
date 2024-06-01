@@ -75,6 +75,7 @@ function App() {
     setShowBasket,
     onAddToCart,
     onLiked,
+    setBuyedItems,
     items,
     likedItems,
     cartItems,

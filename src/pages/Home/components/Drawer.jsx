@@ -31,9 +31,9 @@ export const Drawer = () => {
       setIsBuyed(!isBuyed);
       setCartItems([]);
 
-      await cartItems.forEach((item) => {
+      await cartItems.forEach((itemCart) => {
         axios.delete(
-          `https://665961e4de346625136c2c22.mockapi.io/cart/${item.id}`
+          `https://665961e4de346625136c2c22.mockapi.io/cart/${itemCart.id}`
         );
       });
     } catch (error) {

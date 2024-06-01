@@ -6,7 +6,7 @@ import Liked from "../../../../public/assets/icons/liked.svg";
 import { useContext, useEffect, useState } from "react";
 import { Context } from "../../../App";
 
-export const Card = ({ img, title, price, id }) => {
+export const Card = ({ img, title, price, id, rem = false }) => {
   const { onLiked, onAddToCart, likedItems, cartItems } = useContext(Context);
 
   const [like, setLike] = useState(false);
@@ -22,15 +22,17 @@ export const Card = ({ img, title, price, id }) => {
 
   return (
     <div className="card">
-      <button
-        onClick={() => {
-          setLike(!like);
-          onLiked({ img, title, price, id });
-        }}
-        className="like-btn"
-      >
-        {!like ? <Like /> : <Liked />}
-      </button>
+      {!rem && (
+        <button
+          onClick={() => {
+            setLike(!like);
+            onLiked({ img, title, price, id });
+          }}
+          className="like-btn"
+        >
+          {!like ? <Like /> : <Liked />}
+        </button>
+      )}
       <img src={img} alt="sneakers img" className="img" />
       <h2 className="title">{title}</h2>
       <div>
@@ -38,15 +40,17 @@ export const Card = ({ img, title, price, id }) => {
           <span>Цена:</span>
           <span className="price-span">{price} руб.</span>
         </p>
-        <button
-          onClick={() => {
-            onAddToCart({ id, img, title, price });
-            setAdd(!add);
-          }}
-          className="add-btn"
-        >
-          {!add ? <Add /> : <Added />}
-        </button>
+        {!rem && (
+          <button
+            onClick={() => {
+              onAddToCart({ id, img, title, price });
+              setAdd(!add);
+            }}
+            className="add-btn"
+          >
+            {!add ? <Add /> : <Added />}
+          </button>
+        )}
       </div>
     </div>
   );
@@ -58,4 +62,5 @@ Card.propTypes = {
   price: PropTypes.number,
   id: PropTypes.string,
   onRemove: PropTypes.func,
+  rem: PropTypes.bool,
 };
