@@ -1,6 +1,6 @@
 import { Drawer } from "../Home/components/Drawer";
 import { Link, useNavigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import Back from "../../../public/assets/icons/back.svg";
 import Arrow from "../../../public/assets/icons/arror.svg";
 import { Card } from "../Home/components/Card";
@@ -10,9 +10,11 @@ import axios from "axios";
 export const Profile = () => {
   const navigate = useNavigate();
   const { showBasket, buyedItems, setBuyedItems } = useContext(Context);
-  axios
-    .get("https://665961e4de346625136c2c22.mockapi.io/buyed")
-    .then((res) => setBuyedItems(res.data));
+  useEffect(() => {
+    axios
+      .get("https://665961e4de346625136c2c22.mockapi.io/buyed")
+      .then((res) => setBuyedItems(res.data));
+  }, []);
 
   return (
     <>

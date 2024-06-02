@@ -36,6 +36,9 @@ export const Drawer = () => {
       setBuyedId(data.id);
       setIsBuyed(true);
       setCartItems([]);
+      // await axios
+      //   .get("https://665961e4de346625136c2c22.mockapi.io/cart")
+      //   .then((req) => setCartItems(req.data));
       for (let i = 0; i < cartItems.length; i++) {
         const item = cartItems[i];
         await axios.delete(
